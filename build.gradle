@@ -10,6 +10,29 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId = 'mvn.package'
+            artifactId = 'mvn_package'
+            version = '1.0.0'
+        }
+    }
+
+    repositories {
+        maven {
+            url = "url"
+            credentials {
+                username = project.findProperty('mavenRepoUsername') ?: System.getenv('MAVEN_REPO_USERNAME')
+                password = project.findProperty('mavenRepoPassword') ?: System.getenv('MAVEN_REPO_PASSWORD')
+            }
+        }
+    }
+}
+
+
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
